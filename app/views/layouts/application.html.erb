@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Yelp Clone</title>
+  <%= stylesheet_link_tag 'bootstrap' %>
+	<%= javascript_include_tag 'jquery.min' %>
+	<%= javascript_include_tag 'bootstrap.min' %>
+	
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+
+
+</head>
+<body>
+<%= show_notices %>
+<%= render 'shared/header' %>
+<%= yield %>
+<% debug params %>
+<% debug current_user %>
+</body>
+</html>

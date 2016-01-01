@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <%= form_for(@place) do |f| %>
+      <% if @place.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <h2><%= pluralize(@place.errors.count, "error") %></h2>
+
+          <ul>
+          <% @place.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %><br>
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+        <%= f.hidden_field :owner, :value => current_user.id %>
+      <div class="form-group">
+        <%= f.submit "New Place", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4"></div>
+</div>

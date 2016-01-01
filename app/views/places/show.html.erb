@@ -1,0 +1,77 @@
+<div class="row">
+	<div class="col-md-4">
+		<h1><%= @place.name %></h1>
+	</div>
+	<div class="col-md-8">
+		<%= link_to 'Edit', edit_place_path(@place), class: "btn btn-default" %>
+		<%= link_to 'Destroy', place_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-4">
+		<h4><%= @place.description %></h4>
+	</div>
+	<div class="col-md-8"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= form_for(@review) do |f| %>
+      <% if @review.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <h2><%= pluralize(@review.errors.count, "error") %></h2>
+
+          <ul>
+          <% @review.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :content %><br>
+        <%= f.text_area :content, class: "form-control" %>
+      </div>
+      	<% if logged_in? %>
+        	<%= f.hidden_field :author, :value => current_user.id %>
+        <% end %>
+        	<%= f.hidden_field :reviewed_place, :value => @place.id.to_i %>
+      <div class="form-group">
+	      <select name="review[stars]" class="form-control">
+				  <option>1</option>
+				  <option>2</option>
+				  <option>3</option>
+				  <option>4</option>
+				  <option>5</option>
+				</select>
+
+			</div>
+      <div class="form-group">
+        <%= f.submit "Submit Review", class: "btn btn-primary" %>
+      </div>
+      
+    <% end %>
+
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<br>
+<% @reviews.each do |review| %>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+		  	<div class="panel-heading"><%= User.find_by(id: review.author).username %></div>
+		  	<div class="panel-body">
+		    	<p><%= review.content %></p>
+		  	</div>
+		  	<div class="panel-footer"><%= print_stars(review.stars.to_i) %></div>
+			</div>
+		</div>
+		<div class="col-md-8"></div>
+	</div>
+<% end %>
+
+<%= link_to 'Back', places_path, class: "btn btn-default" %>
+
